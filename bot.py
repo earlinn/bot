@@ -1,18 +1,16 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-
 PROXY = {'proxy_url': 'socks5://t1.learn.python.ru:1080',
     'urllib3_proxy_kwargs': {'username': 'learn', 'password': 'python'}}
-
-with open(r'C:\projects\mybot\config.py') as config_file:
-    api_key = config_file.readline()
-
 
 import logging
 logging.basicConfig(format='%(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO,
                     filename='bot.log'
                     )
+
+with open(r'C:\projects\mybot\config.py') as config_file:
+    api_key = config_file.readline()
 
 
 def greet_user(bot, update):
@@ -21,22 +19,38 @@ def greet_user(bot, update):
     update.message.reply_text(text)
 
 
+def talk_to_me(bot, update):
+    user_text = update.message.text 
+    print(user_text)
+    update.message.reply_text(user_text)
+
+
+def greet_planet(bot, update):
+    text = 'Вызван /planet'
+    print(text)
+    update.message.reply_text(text)
+
+
+def planet_handler(bot, update):
+    user_text = update.message.text
+    planet = user_text.split()
+    user_text = planet[1]
+    print(ephem.constellation(user_text))
+    update.message.reply_text(user_text)
+
+
 def main():
     mybot = Updater(api_key, request_kwargs=PROXY)
     
     dp = mybot.dispatcher
     dp.add_handler(CommandHandler("start", greet_user))
     dp.add_handler(MessageHandler(Filters.text, talk_to_me))
-
+    dp.add_handler(CommandHandler("planet", greet_planet))
+    dp.add_handler(MessageHandler(Filters.text, planet_handler))
+    
 
     mybot.start_polling()
     mybot.idle()
-
-
-def talk_to_me(bot, update):
-    user_text = update.message.text 
-    print(user_text)
-    update.message.reply_text(user_text)
 
 
 main()
