@@ -34,7 +34,8 @@ def greet_planet(bot, update):
 def planet_handler(bot, update):
     user_text = update.message.text
     planet = user_text.split()
-    user_text = planet[1]
+    planet = planet[1]
+    user_text = ephem.planet('2020/03/03')
     print(ephem.constellation(user_text))
     update.message.reply_text(user_text)
 
