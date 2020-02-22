@@ -35,8 +35,7 @@ def planet(bot, update):
         date = ephem.now()
     else:
         date = user_input[2]
-#    user_text = getattr(ephem, planet)(date)
-    user_text = ephem.planet(date)
+    user_text = getattr(ephem, planet)(date)
     constellation = ephem.constellation(user_text)
     print(constellation)
     update.message.reply_text(constellation)
