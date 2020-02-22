@@ -25,30 +25,34 @@ def talk_to_me(bot, update):
     update.message.reply_text(user_text)
 
 
-def greet_planet(bot, update):
+def planet(bot, update):
     text = 'Вызван /planet'
     print(text)
     update.message.reply_text(text)
+    user_text = ephem.Mars('2019/03/03')
+    print(ephem.constellation(user_text))
+    update.message.reply_text(user_text)
 
 
 def planet_handler(bot, update):
     user_text = update.message.text
-    planet = user_text.split()
-    planet = planet[1]
-    user_text = ephem.planet('2020/03/03')
+ #   planet = user_text.split()
+ #   planet = planet[1]
+    user_text = ephem.Mars('2019/03/03')
     print(ephem.constellation(user_text))
     update.message.reply_text(user_text)
 
 
 def main():
     mybot = Updater(api_key, request_kwargs=PROXY)
+
     
     dp = mybot.dispatcher
     dp.add_handler(CommandHandler("start", greet_user))
     dp.add_handler(MessageHandler(Filters.text, talk_to_me))
-    dp.add_handler(CommandHandler("planet", greet_planet))
-    dp.add_handler(MessageHandler(Filters.text, planet_handler))
-    
+    dp.add_handler(CommandHandler("planet", planet))
+ #   dp.add_handler(MessageHandler(Filters.text, planet_handler))
+ #   print(Filters.text) 
 
     mybot.start_polling()
     mybot.idle()
