@@ -9,6 +9,9 @@ logging.basicConfig(format='%(name)s - %(levelname)s - %(message)s',
                     filename='bot.log'
                     )
 
+import ephem
+from pprint import pprint
+
 with open(r'C:\projects\mybot\config.py') as config_file:
     api_key = config_file.readline()
 
@@ -26,21 +29,24 @@ def talk_to_me(bot, update):
 
 
 def planet(bot, update):
-    text = 'Вызван /planet'
-    print(text)
-    update.message.reply_text(text)
-    user_text = ephem.Mars('2019/03/03')
-    print(ephem.constellation(user_text))
-    update.message.reply_text(user_text)
+    user_input = update.message.text.split()
+    planet = user_input[1]
+    if len(user_input) == 2:
+        date = ephem.now()
+    else:
+        date = user_input[2]
+#    user_text = getattr(ephem, planet)(date)
+    user_text = ephem.planet(date)
+    constellation = ephem.constellation(user_text)
+    print(constellation)
+    update.message.reply_text(constellation)
 
 
-def planet_handler(bot, update):
-    user_text = update.message.text
- #   planet = user_text.split()
- #   planet = planet[1]
-    user_text = ephem.Mars('2019/03/03')
-    print(ephem.constellation(user_text))
-    update.message.reply_text(user_text)
+def planets(bot, update):
+    all_planets = ephem._libastro.builtin_planets()
+    for planet in all_planets:
+        print(planet[2])
+        update.message.reply_text(planet[2])
 
 
 def main():
@@ -51,8 +57,8 @@ def main():
     dp.add_handler(CommandHandler("start", greet_user))
     dp.add_handler(MessageHandler(Filters.text, talk_to_me))
     dp.add_handler(CommandHandler("planet", planet))
- #   dp.add_handler(MessageHandler(Filters.text, planet_handler))
- #   print(Filters.text) 
+    dp.add_handler(CommandHandler("planets", planets))
+ 
 
     mybot.start_polling()
     mybot.idle()
