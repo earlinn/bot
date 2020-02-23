@@ -78,6 +78,17 @@ def wordcount(bot, update):
     update.message.reply_text(final_answer)
 
 
+def next_full_moon(bot, update):
+    user_input = update.message.text.split()
+    if len(user_input) == 1:
+        date = ephem.now()
+    else:
+        date = user_input[1]
+    full_moon = ephem.next_full_moon(date)
+    print(full_moon)
+    update.message.reply_text(full_moon)
+
+
 def main():
     mybot = Updater(api_key, request_kwargs=PROXY)
 
@@ -88,7 +99,8 @@ def main():
     dp.add_handler(CommandHandler("planet", planet))
     dp.add_handler(CommandHandler("planets", planets))
     dp.add_handler(CommandHandler("wordcount", wordcount))
- 
+    dp.add_handler(CommandHandler("next_full_moon", next_full_moon))
+
 
     mybot.start_polling()
     mybot.idle()
