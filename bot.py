@@ -49,6 +49,35 @@ def planets(bot, update):
         update.message.reply_text(planet[2])
 
 
+def wordcount(bot, update):
+    user_input = update.message.text.split()
+    words_num, final_answer, ending = 0, '', ''
+    if len(user_input) - 1 == 0:
+        final_answer = 'Пустая строка'
+    else:
+        for word in range(1, len(user_input)):
+            it_is_a_word = 0
+            for character in user_input[word]:
+                if character.isalpha():
+                    it_is_a_word += 1
+            if it_is_a_word:
+                if not user_input[word].isdigit():
+                    words_num += 1
+        if words_num == 0:
+            final_answer = 'Не введено ни одного слова'
+        else:
+            answer = words_num
+            if answer % 10 == 1 and answer % 100 != 11:
+                ending = 'слово'
+            elif answer % 10 in [2, 3, 4] and answer % 100 not in [12, 13, 14]:
+                ending = 'слова'
+            else:
+                ending = 'слов'
+            final_answer = f'{answer} {ending}'
+    print(final_answer)
+    update.message.reply_text(final_answer)
+
+
 def main():
     mybot = Updater(api_key, request_kwargs=PROXY)
 
@@ -58,6 +87,7 @@ def main():
     dp.add_handler(MessageHandler(Filters.text, talk_to_me))
     dp.add_handler(CommandHandler("planet", planet))
     dp.add_handler(CommandHandler("planets", planets))
+    dp.add_handler(CommandHandler("wordcount", wordcount))
  
 
     mybot.start_polling()
