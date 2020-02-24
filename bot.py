@@ -30,8 +30,8 @@ def talk_to_me(bot, update):
 
 def planet(bot, update):
     user_input = update.message.text.split()
-    planet = user_input[1]
-    if len(user_input) == 2:
+    planet, empty_date = user_input[1], 2
+    if len(user_input) == empty_date:
         date = ephem.now()
     else:
         date = user_input[2]
@@ -52,7 +52,8 @@ def planets(bot, update):
 def wordcount(bot, update):
     user_input = update.message.text.split()
     words_num, final_answer, ending = 0, '', ''
-    if len(user_input) - 1 == 0:
+    empty_string = 1
+    if len(user_input) == empty_string:
         final_answer = 'Пустая строка'
     else:
         for word in range(1, len(user_input)):
@@ -80,7 +81,8 @@ def wordcount(bot, update):
 
 def next_full_moon(bot, update):
     user_input = update.message.text.split()
-    if len(user_input) == 1:
+    empty_date = 1
+    if len(user_input) == empty_date:
         date = ephem.now()
     else:
         date = user_input[1]
