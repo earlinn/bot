@@ -132,3 +132,18 @@ root - INFO - User Earlinn, Chat id 331787003, Message hl
 root - INFO - User Earlinn, Chat id 331787003, Message tfuyig
 telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
 telegram.ext.updater - WARNING - Exiting immediately!
+root - INFO - User Earlinn, Chat id 331787003, Message fgjkl;hghjk
+root - INFO - User Earlinn, Chat id 331787003, Message hkjl;
+root - INFO - User Earlinn, Chat id 331787003, Message hjkl;
+root - INFO - User Earlinn, Chat id 331787003, Message ghjkl
+telegram.ext.dispatcher - ERROR - No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\Lisys\AppData\Roaming\Python\Python37\site-packages\telegram\ext\dispatcher.py", line 372, in process_update
+    handler.handle_update(update, self, check, context)
+  File "C:\Users\Lisys\AppData\Roaming\Python\Python37\site-packages\telegram\ext\handler.py", line 120, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+  File "bot.py", line 69, in planet
+    planet, empty_date = user_input[1], 2
+IndexError: list index out of range
+telegram.ext.updater - INFO - Received signal 2 (SIGINT), stopping...
+telegram.ext.updater - WARNING - Exiting immediately!
