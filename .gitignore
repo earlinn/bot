@@ -2,3 +2,4 @@ config.py
 env
 cats
 bot.log
+__pycache__
